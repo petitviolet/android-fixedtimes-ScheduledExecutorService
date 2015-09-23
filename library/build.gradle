@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+apply plugin: 'android-maven'
+
+def libVersion = "0.1.0"
+def groupId = "net.petitviolet.library"
+def libName = "fixedtimes-scheduledexecutorservice"
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+    }
+    publishNonDefault true
+    defaultPublishConfig 'release'
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
