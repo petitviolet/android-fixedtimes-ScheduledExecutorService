@@ -5,6 +5,7 @@ import android.util.SparseArray;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,7 @@ public class FixedTimesScheduledExecutorService {
     private final ScheduledExecutorService executorService;
     private final SparseArray<Integer> mTaskRunCounts;
     private final SparseArray<Integer> mTaskExecutedCounts;
-    private final SparseArray<ScheduledFuture> mFutures;
+    private final SparseArray<Future> mFutures;
 
     public FixedTimesScheduledExecutorService() {
         executorService = Executors.newSingleThreadScheduledExecutor();
@@ -42,7 +43,7 @@ public class FixedTimesScheduledExecutorService {
 
     private void stopTask(Callable command, boolean interrupt) {
         Log.d(TAG, "stop: " + command.hashCode());
-        ScheduledFuture future = mFutures.get(command.hashCode());
+        Future future = mFutures.get(command.hashCode());
         if (future != null) {
             future.cancel(interrupt);
         }
@@ -54,7 +55,7 @@ public class FixedTimesScheduledExecutorService {
 
     private void stopTask(Runnable command, boolean interrupt) {
         Log.d(TAG, "stop: " + command.hashCode());
-        ScheduledFuture future = mFutures.get(command.hashCode());
+        Future future = mFutures.get(command.hashCode());
         if (future != null) {
             future.cancel(interrupt);
         }
